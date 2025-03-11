@@ -1,0 +1,29 @@
+{
+	"name": "LanguangeParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageMidtermProject",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "language_cleaned_1.parquet",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "LANGUAGE_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "LANGUAGE_ABBR",
+				"type": "UTF8"
+			}
+		]
+	}
+}

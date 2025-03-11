@@ -1,55 +1,56 @@
 {
-	"name": "Load_Dim_Region",
+	"name": "Load_Dim_Language",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "StagingRegionCodes",
+						"referenceName": "StagingLanguageinSnowflake",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "SrcParquetLanguage"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "Snowflake_Region",
+						"referenceName": "Snowflake_Dim_Language",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sinkDimLanguage",
+					"description": "Export data to Snowflake_Language"
 				}
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "MakeJOBIDandLOADDT"
 				},
 				{
-					"name": "surrogateKey1"
+					"name": "surrogateKey"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          REGION_ABBR as string,",
-				"          REGION_NAME as string,",
+				"          LANGUAGE_NAME as string,",
+				"          LANGUAGE_ABBR as string,",
 				"          DI_JOB_ID as string,",
 				"          DI_LOAD_DT as date",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'table') ~> source1",
-				"source1 derive(DI_JOB_ID = uuid(),",
-				"          DI_LOAD_DT = currentTimestamp()) ~> derivedColumn1",
-				"derivedColumn1 keyGenerate(output(REGION_SK as long),",
+				"     format: 'table') ~> SrcParquetLanguage",
+				"SrcParquetLanguage derive(DI_JOB_ID = uuid(),",
+				"          DI_LOAD_DT = currentTimestamp()) ~> MakeJOBIDandLOADDT",
+				"MakeJOBIDandLOADDT keyGenerate(output(LANGUAGE_SK as long),",
 				"     startAt: 1L,",
-				"     stepValue: 1L) ~> surrogateKey1",
-				"surrogateKey1 sink(allowSchemaDrift: true,",
+				"     stepValue: 1L) ~> surrogateKey",
+				"surrogateKey sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          REGION_SK as decimal(20,0),",
-				"          REGION_NAME as string,",
-				"          REGION_ABBR as string,",
+				"          LANGUAGE_SK as decimal(20,0),",
+				"          LANGUAGE_NAME as string,",
+				"          LANGUAGE_ABBR as string,",
 				"          JOB_ID as string,",
 				"          LOAD_DT as date",
 				"     ),",
@@ -62,12 +63,12 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     stageInsert: true,",
 				"     mapColumn(",
-				"          REGION_SK,",
-				"          REGION_NAME,",
-				"          REGION_ABBR,",
+				"          LANGUAGE_SK,",
+				"          LANGUAGE_NAME,",
+				"          LANGUAGE_ABBR,",
 				"          JOB_ID = DI_JOB_ID,",
 				"          LOAD_DT = DI_LOAD_DT",
-				"     )) ~> sink1"
+				"     )) ~> sinkDimLanguage"
 			]
 		}
 	}
