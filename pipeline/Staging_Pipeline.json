@@ -1,9 +1,9 @@
 {
-	"name": "Staging_Pipelin",
+	"name": "Staging_Pipeline",
 	"properties": {
 		"activities": [
 			{
-				"name": "Staging_title_akas",
+				"name": "Staging Title AKAs",
 				"description": "Staging_title_akas to snowflake",
 				"type": "Copy",
 				"state": "Inactive",
@@ -74,14 +74,14 @@
 				]
 			},
 			{
-				"name": "Staging Title_crew",
+				"name": "Staging Title Crew",
 				"description": "Staging Title_crew",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Staging_title_akas",
+						"activity": "Staging Title AKAs",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -159,7 +159,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Staging Title_crew",
+						"activity": "Staging Title Crew",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -311,6 +311,8 @@
 				"name": "Staging Title_Principles",
 				"description": "Staging Title_Principles to SnowFlake",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Staging Title_Episodes",
