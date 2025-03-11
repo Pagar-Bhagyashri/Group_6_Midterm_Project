@@ -1,0 +1,16 @@
+{
+	"name": "SnowflakeTableNameBasics",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "IMDb_Project_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "GROUP_6_MIDTERM_PROJECT_SCHEMA",
+			"table": "STAGING_NAME_BASICS"
+		}
+	}
+}
