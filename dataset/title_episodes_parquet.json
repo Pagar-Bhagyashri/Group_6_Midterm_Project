@@ -1,5 +1,5 @@
 {
-	"name": "title_crew_episodes",
+	"name": "title_episodes_parquet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorageMidtermProject",
