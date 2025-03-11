@@ -1,0 +1,39 @@
+{
+	"name": "Snowflake_Dim_Language",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "IMDb_Project_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [
+			{
+				"name": "LANGUAGE_SK",
+				"type": "NUMBER",
+				"precision": 20,
+				"scale": 0
+			},
+			{
+				"name": "LANGUAGE_NAME",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "LANGUAGE_ABBR",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "JOB_ID",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "LOAD_DT",
+				"type": "DATE"
+			}
+		],
+		"typeProperties": {
+			"schema": "GROUP_6_MIDTERM_PROJECT_EDW",
+			"table": "DIM_LANGUAGES"
+		}
+	}
+}
