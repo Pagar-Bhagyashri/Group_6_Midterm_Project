@@ -1,5 +1,5 @@
 {
-	"name": "NameBasicsclean1Parquet2",
+	"name": "name_basic_parquet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorageMidtermProject",
