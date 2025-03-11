@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "Load_Fact_Persons",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
