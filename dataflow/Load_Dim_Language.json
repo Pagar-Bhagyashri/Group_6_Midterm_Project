@@ -1,0 +1,75 @@
+{
+	"name": "Load_Dim_Language",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "StagingLanguageinSnowflake",
+						"type": "DatasetReference"
+					},
+					"name": "SrcParquetLanguage"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Snowflake_Dim_Language",
+						"type": "DatasetReference"
+					},
+					"name": "sinkDimLanguage",
+					"description": "Export data to Snowflake_Language"
+				}
+			],
+			"transformations": [
+				{
+					"name": "MakeJOBIDandLOADDT"
+				},
+				{
+					"name": "surrogateKey"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          LANGUAGE_NAME as string,",
+				"          LANGUAGE_ABBR as string,",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> SrcParquetLanguage",
+				"SrcParquetLanguage derive(DI_JOB_ID = uuid(),",
+				"          DI_LOAD_DT = currentTimestamp()) ~> MakeJOBIDandLOADDT",
+				"MakeJOBIDandLOADDT keyGenerate(output(LANGUAGE_SK as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey",
+				"surrogateKey sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          LANGUAGE_SK as decimal(20,0),",
+				"          LANGUAGE_NAME as string,",
+				"          LANGUAGE_ABBR as string,",
+				"          JOB_ID as string,",
+				"          LOAD_DT as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          LANGUAGE_SK,",
+				"          LANGUAGE_NAME,",
+				"          LANGUAGE_ABBR,",
+				"          JOB_ID = DI_JOB_ID,",
+				"          LOAD_DT = DI_LOAD_DT",
+				"     )) ~> sinkDimLanguage"
+			]
+		}
+	}
+}
