@@ -1,5 +1,5 @@
 {
-	"name": "SnowflakeDimTitlesDF",
+	"name": "Snowflake_Dim_Titles",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",

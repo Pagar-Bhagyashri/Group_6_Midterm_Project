@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "Snowflake_Region",
+						"referenceName": "Snowflake_Dim_Region",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"

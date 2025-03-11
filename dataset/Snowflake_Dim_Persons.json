@@ -1,5 +1,5 @@
 {
-	"name": "Snowflake_DIM_PERSONS",
+	"name": "Snowflake_Dim_Persons",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",

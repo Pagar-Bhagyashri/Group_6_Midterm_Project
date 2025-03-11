@@ -1,5 +1,5 @@
 {
-	"name": "StagingLanguageinSnowflake",
+	"name": "StagingLanguageCodes",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
