@@ -1,5 +1,5 @@
 {
-	"name": "TitleAkasSF",
+	"name": "StagingTitleAkas",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
