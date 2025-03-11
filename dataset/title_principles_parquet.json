@@ -1,0 +1,45 @@
+{
+	"name": "title_principles_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageMidtermProject",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "title.principals_cleaned_1.parquet",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "TCONST",
+				"type": "UTF8"
+			},
+			{
+				"name": "ORDERING",
+				"type": "INT32"
+			},
+			{
+				"name": "NCONST",
+				"type": "UTF8"
+			},
+			{
+				"name": "CATEGORY",
+				"type": "UTF8"
+			},
+			{
+				"name": "JOB",
+				"type": "UTF8"
+			},
+			{
+				"name": "CHARACTERS",
+				"type": "UTF8"
+			}
+		]
+	}
+}

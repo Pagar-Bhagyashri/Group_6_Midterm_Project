@@ -1,0 +1,9 @@
+{
+	"name": "Group6MidtermProject",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "bc08e914-cc1a-4ccd-a2d3-2bfcaefa8755",
+		"tenantId": "a8eec281-aaa3-4dae-ac9b-9a398b9215e7"
+	}
+}
