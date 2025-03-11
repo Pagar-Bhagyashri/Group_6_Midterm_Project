@@ -1,0 +1,53 @@
+{
+	"name": "SnowflakeDimTitlesDF",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "IMDb_Project_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [
+			{
+				"name": "TITLE_SK",
+				"type": "NUMBER",
+				"precision": 22,
+				"scale": 0
+			},
+			{
+				"name": "TCONST",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "PRIMARY_TITLE",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "ORIGINAL_TITLE",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "TITLE_TYPE",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "IS_ADULT",
+				"type": "NUMBER",
+				"precision": 2,
+				"scale": 0
+			},
+			{
+				"name": "JOB_ID",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "LOAD_DT",
+				"type": "DATE"
+			}
+		],
+		"typeProperties": {
+			"schema": "GROUP_6_MIDTERM_PROJECT_EDW",
+			"table": "DIM_TITLES"
+		}
+	}
+}
