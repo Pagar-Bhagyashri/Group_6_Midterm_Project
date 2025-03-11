@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "Snowflake_Dim_Persons",
+						"referenceName": "Snowflake_DIM_PERSONS",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -46,10 +46,14 @@
 				"source1 keyGenerate(output(PERSONS_SK as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
-				"surrogateKey1 derive(START_DATE = toDate(currentUTC()),",
-				"          END_DATE = toDate('9999-12-31'),",
-				"          IS_CURRENT = 1,",
-				"          PERSON_DK = md5(toString(PERSONS_SK) +PRIMARYPROFESSION)) ~> derivedColumn1",
+				"surrogateKey1 derive(START_DATE = toDate(currentUTC())\r",
+				",",
+				"          END_DATE = toDate('9999-12-31')\r",
+				",",
+				"          IS_CURRENT = 1\r",
+				",",
+				"          PERSON_DK = md5(toString(PERSONS_SK) +PRIMARYPROFESSION)\r",
+				") ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

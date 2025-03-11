@@ -1,5 +1,5 @@
 {
-	"name": "StagingLanguageCodes",
+	"name": "Snowflake_Region",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,25 +9,31 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "LANGUAGE_NAME",
+				"name": "REGION_SK",
+				"type": "NUMBER",
+				"precision": 20,
+				"scale": 0
+			},
+			{
+				"name": "REGION_NAME",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "LANGUAGE_ABBR",
+				"name": "REGION_ABBR",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "DI_JOB_ID",
+				"name": "JOB_ID",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "DI_LOAD_DT",
+				"name": "LOAD_DT",
 				"type": "DATE"
 			}
 		],
 		"typeProperties": {
-			"schema": "GROUP_6_MIDTERM_PROJECT_SCHEMA",
-			"table": "STAGING_LANGUAGE_CODES"
+			"schema": "GROUP_6_MIDTERM_PROJECT_EDW",
+			"table": "DIM_REGIONS"
 		}
 	}
 }

@@ -1,5 +1,5 @@
 {
-	"name": "Snowflake_Dim_Persons",
+	"name": "SnowflakeDim_profession_DF",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,33 +9,13 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "PERSON_SK",
+				"name": "PROFESSION_SK",
 				"type": "NUMBER",
 				"precision": 20,
 				"scale": 0
 			},
 			{
-				"name": "NCONST",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "PRIMARY_NAME",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "BIRTH_YEAR",
-				"type": "NUMBER",
-				"precision": 4,
-				"scale": 0
-			},
-			{
-				"name": "DEATH_YEAR",
-				"type": "NUMBER",
-				"precision": 4,
-				"scale": 0
-			},
-			{
-				"name": "KNOWN_TITLE",
+				"name": "PROFESSION_NAME",
 				"type": "VARCHAR"
 			},
 			{
@@ -53,7 +33,7 @@
 				"type": "DATE"
 			},
 			{
-				"name": "PERSON_DK",
+				"name": "PROFESSION_DK",
 				"type": "VARCHAR"
 			},
 			{
@@ -67,7 +47,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_EDW",
-			"table": "DIM_PERSONS"
+			"table": "DIM_PROFESSION"
 		}
 	}
 }

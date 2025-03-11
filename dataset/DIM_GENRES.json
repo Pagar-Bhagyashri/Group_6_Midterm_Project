@@ -1,5 +1,5 @@
 {
-	"name": "Snowflake_Dim_Region",
+	"name": "DIM_GENRES",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,17 +9,13 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "REGION_SK",
+				"name": "GENRE_SK",
 				"type": "NUMBER",
 				"precision": 20,
 				"scale": 0
 			},
 			{
-				"name": "REGION_NAME",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "REGION_ABBR",
+				"name": "GENRE_NAME",
 				"type": "VARCHAR"
 			},
 			{
@@ -33,7 +29,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_EDW",
-			"table": "DIM_REGIONS"
+			"table": "DIM_GENRES"
 		}
 	}
 }

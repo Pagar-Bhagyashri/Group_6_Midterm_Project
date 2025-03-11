@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "StagingLanguageCodes",
+						"referenceName": "StagingLanguageinSnowflake",
 						"type": "DatasetReference"
 					},
 					"name": "SrcParquetLanguage"
