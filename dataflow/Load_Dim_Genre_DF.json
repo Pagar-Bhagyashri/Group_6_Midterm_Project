@@ -1,0 +1,85 @@
+{
+	"name": "Load_Dim_Genre_DF",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "StagingTitleBasic",
+						"type": "DatasetReference"
+					},
+					"name": "LoadTitleBasic"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DIM_GENRES",
+						"type": "DatasetReference"
+					},
+					"name": "LoadGenre2SnowFlake"
+				}
+			],
+			"transformations": [
+				{
+					"name": "surrogateKey"
+				},
+				{
+					"name": "gettingUniqueGenres",
+					"description": "Getting Unique Values"
+				},
+				{
+					"name": "AddingJOBIDandLOADDT"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          TCONST as string,",
+				"          TITLETYPE as string,",
+				"          PRIMARYTITLE as string,",
+				"          ORIGINALTITLE as string,",
+				"          ISADULT as decimal(2,0),",
+				"          STARTYEAR as decimal(4,0),",
+				"          ENDYEAR as decimal(4,0),",
+				"          RUNTIMEMINUTES as decimal(20,0),",
+				"          GENRES as string,",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> LoadTitleBasic",
+				"gettingUniqueGenres keyGenerate(output(GENRE_SK as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey",
+				"LoadTitleBasic aggregate(groupBy(GENRES),",
+				"     GENRE = first(GENRES)) ~> gettingUniqueGenres",
+				"surrogateKey derive(JOB_ID = uuid(),",
+				"          LOAD_DT = currentTimestamp()) ~> AddingJOBIDandLOADDT",
+				"AddingJOBIDandLOADDT sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          GENRE_SK as decimal(20,0),",
+				"          GENRE_NAME as string,",
+				"          JOB_ID as string,",
+				"          LOAD_DT as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          GENRE_SK,",
+				"          GENRE_NAME = GENRES,",
+				"          JOB_ID,",
+				"          LOAD_DT",
+				"     )) ~> LoadGenre2SnowFlake"
+			]
+		}
+	}
+}

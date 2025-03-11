@@ -1,0 +1,29 @@
+{
+	"name": "region_codes_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageMidtermProject",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "region_cleaned_1.parquet",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "REGION_ABBR",
+				"type": "UTF8"
+			},
+			{
+				"name": "REGION_NAME",
+				"type": "UTF8"
+			}
+		]
+	}
+}
