@@ -1,0 +1,87 @@
+{
+	"name": "DF_title_basics_flattened_data",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Parquet1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "TitleBasicsflatteneddata",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SpiltColumns"
+				},
+				{
+					"name": "flattenGenres"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          tconst as string,",
+				"          titleType as string,",
+				"          primaryTitle as string,",
+				"          originalTitle as string,",
+				"          isAdult as short,",
+				"          startYear as integer,",
+				"          endYear as integer,",
+				"          runtimeMinutes as long,",
+				"          genres as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> source1",
+				"source1 derive(GENRES = split(genres, ',')) ~> SpiltColumns",
+				"SpiltColumns foldDown(unroll(GENRES),",
+				"     mapColumn(",
+				"          tconst,",
+				"          titleType,",
+				"          primaryTitle,",
+				"          originalTitle,",
+				"          isAdult,",
+				"          startYear,",
+				"          endYear,",
+				"          runtimeMinutes,",
+				"          genres = SpiltColumns@GENRES",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flattenGenres",
+				"flattenGenres derive(DI_JOB_ID = uuid(),",
+				"          DI_LOAD_DT = currentTimestamp()) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          nconst as string,",
+				"          primaryName as string,",
+				"          birthYear as integer,",
+				"          deathYear as integer,",
+				"          primaryProfession as string,",
+				"          knownForTitles as string",
+				"     ),",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink"
+			]
+		}
+	}
+}
