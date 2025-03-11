@@ -466,6 +466,8 @@
 			{
 				"name": "StagingLanguage",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Staging Region_Codes",
