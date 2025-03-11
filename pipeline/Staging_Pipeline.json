@@ -311,8 +311,6 @@
 				"name": "Staging Title_Principles",
 				"description": "Staging Title_Principles to SnowFlake",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Staging Title_Episodes",
@@ -380,7 +378,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "StagingTitlePrinciples",
+						"referenceName": "PrincipleSink",
 						"type": "DatasetReference"
 					}
 				]
