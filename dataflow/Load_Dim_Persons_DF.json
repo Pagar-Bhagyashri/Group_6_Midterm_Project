@@ -1,0 +1,98 @@
+{
+	"name": "Load_Dim_Persons_DF",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "StagingNameBasic",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Snowflake_DIM_PERSONS",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "surrogateKey1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          NCONST as string,",
+				"          PRIMARYNAME as string,",
+				"          BIRTHYEAR as decimal(4,0),",
+				"          DEATHYEAR as decimal(4,0),",
+				"          PRIMARYPROFESSION as string,",
+				"          KNOWNFORTITLES as string,",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> source1",
+				"source1 keyGenerate(output(PERSONS_SK as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"surrogateKey1 derive(START_DATE = toDate(currentUTC())\r",
+				",",
+				"          END_DATE = toDate('9999-12-31')\r",
+				",",
+				"          IS_CURRENT = 1\r",
+				",",
+				"          PERSON_DK = md5(toString(PERSONS_SK) +PRIMARYPROFESSION)\r",
+				") ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          PERSON_SK as decimal(20,0),",
+				"          NCONST as string,",
+				"          PRIMARY_NAME as string,",
+				"          BIRTH_YEAR as decimal(4,0),",
+				"          DEATH_YEAR as decimal(4,0),",
+				"          KNOWN_TITLE as string,",
+				"          IS_CURRENT as decimal(2,0),",
+				"          START_DATE as date,",
+				"          END_DATE as date,",
+				"          PERSON_DK as string,",
+				"          JOB_ID as string,",
+				"          LOAD_DT as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          PERSON_SK = PERSONS_SK,",
+				"          NCONST,",
+				"          PRIMARY_NAME = PRIMARYNAME,",
+				"          BIRTH_YEAR = BIRTHYEAR,",
+				"          DEATH_YEAR = DEATHYEAR,",
+				"          KNOWN_TITLE = KNOWNFORTITLES,",
+				"          IS_CURRENT,",
+				"          START_DATE,",
+				"          END_DATE,",
+				"          PERSON_DK,",
+				"          JOB_ID = DI_JOB_ID,",
+				"          LOAD_DT = DI_LOAD_DT",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
