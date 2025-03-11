@@ -1,5 +1,5 @@
 {
-	"name": "NameBasicCleaned1",
+	"name": "title_rating_parquet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorageMidtermProject",
@@ -10,35 +10,23 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "name.basics_cleaned_1.parquet",
+				"fileName": "title.ratings_cleaned_1.parquet",
 				"fileSystem": "silver"
 			},
 			"compressionCodec": "snappy"
 		},
 		"schema": [
 			{
-				"name": "NCONST",
+				"name": "TCONST",
 				"type": "UTF8"
 			},
 			{
-				"name": "PRIMARYNAME",
-				"type": "UTF8"
+				"name": "AVERAGERATING",
+				"type": "FLOAT"
 			},
 			{
-				"name": "BIRTHYEAR",
-				"type": "INT32"
-			},
-			{
-				"name": "DEATHYEAR",
-				"type": "INT32"
-			},
-			{
-				"name": "PRIMARYPROFESSION",
-				"type": "UTF8"
-			},
-			{
-				"name": "KNOWNFORTITLES",
-				"type": "UTF8"
+				"name": "NUMVOTES",
+				"type": "INT64"
 			}
 		]
 	}

@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "TitleBasicsParquet",
+						"referenceName": "title_basic_parquet",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "Title_Basics_Flattened_data_SnowflakeTable",
+						"referenceName": "StagingTitleBasic",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"

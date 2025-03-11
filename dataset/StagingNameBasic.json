@@ -1,5 +1,5 @@
 {
-	"name": "SnowflakeTable1",
+	"name": "StagingNameBasic",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,47 +9,31 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "TCONST",
+				"name": "NCONST",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "TITLETYPE",
+				"name": "PRIMARYNAME",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "PRIMARYTITLE",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "ORIGINALTITLE",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "ISADULT",
-				"type": "NUMBER",
-				"precision": 2,
-				"scale": 0
-			},
-			{
-				"name": "STARTYEAR",
+				"name": "BIRTHYEAR",
 				"type": "NUMBER",
 				"precision": 4,
 				"scale": 0
 			},
 			{
-				"name": "ENDYEAR",
+				"name": "DEATHYEAR",
 				"type": "NUMBER",
 				"precision": 4,
 				"scale": 0
 			},
 			{
-				"name": "RUNTIMEMINUTES",
-				"type": "NUMBER",
-				"precision": 20,
-				"scale": 0
+				"name": "PRIMARYPROFESSION",
+				"type": "VARCHAR"
 			},
 			{
-				"name": "GENRES",
+				"name": "KNOWNFORTITLES",
 				"type": "VARCHAR"
 			},
 			{
@@ -63,7 +47,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_SCHEMA",
-			"table": "STAGING_TITLE_BASICS"
+			"table": "STAGING_NAME_BASICS"
 		}
 	}
 }

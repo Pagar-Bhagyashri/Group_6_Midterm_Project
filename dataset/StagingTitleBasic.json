@@ -1,5 +1,5 @@
 {
-	"name": "Title_Basics_Flattened_data_SnowflakeTable",
+	"name": "StagingTitleBasic",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",

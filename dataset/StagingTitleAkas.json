@@ -1,5 +1,5 @@
 {
-	"name": "Snowflakenamebasics",
+	"name": "StagingTitleAkas",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,32 +9,40 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "NCONST",
+				"name": "TITLEID",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "PRIMARYNAME",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "BIRTHYEAR",
+				"name": "ORDERING",
 				"type": "NUMBER",
-				"precision": 4,
+				"precision": 38,
 				"scale": 0
 			},
 			{
-				"name": "DEATHYEAR",
+				"name": "TITLE",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "REGION",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "LANGUAGE",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "TYPES",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "ATTRIBUTES",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "ISORIGINALTITLE",
 				"type": "NUMBER",
-				"precision": 4,
+				"precision": 2,
 				"scale": 0
-			},
-			{
-				"name": "PRIMARYPROFESSION",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "KNOWNFORTITLES",
-				"type": "VARCHAR"
 			},
 			{
 				"name": "DI_JOB_ID",
@@ -47,7 +55,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_SCHEMA",
-			"table": "STAGING_NAME_BASICS"
+			"table": "STAGING_TITLE_AKAS"
 		}
 	}
 }

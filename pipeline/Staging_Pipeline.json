@@ -62,13 +62,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "TitleAkasParquet1",
+						"referenceName": "title_akas_parquet",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "TitleAkasSF",
+						"referenceName": "StagingTitleAkas",
 						"type": "DatasetReference"
 					}
 				]
@@ -218,7 +218,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "title_raing_parquet",
+						"referenceName": "title_rating_parquet",
 						"type": "DatasetReference"
 					}
 				],
@@ -296,7 +296,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "title_crew_episodes",
+						"referenceName": "title_episodes_parquet",
 						"type": "DatasetReference"
 					}
 				],
