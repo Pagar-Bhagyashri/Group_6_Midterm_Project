@@ -1,5 +1,5 @@
 {
-	"name": "dataflow2",
+	"name": "Load_Fact_Episodes",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -19,8 +19,22 @@
 					"name": "TitleEpisodes"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Snowflake_FACT_EPISODES",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
+				{
+					"name": "derivedfromjoin"
+				},
+				{
+					"name": "selectData"
+				},
 				{
 					"name": "join1"
 				}
@@ -50,11 +64,54 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table') ~> TitleEpisodes",
-				"DIMTITLE, TitleEpisodes join(DIMTITLE@TCONST == TitleEpisodes@TCONST,",
-				"     joinType:'outer',",
+				"join1 derive(DI_JOB_ID = uuid(),",
+				"          DI_LOAD_DT = currentTimestamp(),",
+				"          EPISODE_SK = crc32(toString(SEASONNUMBER) + toString(EPISODENUMBER))\r",
+				",",
+				"          {Numof Episodes} = 1,",
+				"          PARENT_TITLE_SK = crc32(TITLE_SK)) ~> derivedfromjoin",
+				"TitleEpisodes select(mapColumn(",
+				"          TCONST,",
+				"          SEASONNUMBER,",
+				"          EPISODENUMBER",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectData",
+				"DIMTITLE, selectData join(DIMTITLE@TCONST == selectData@TCONST,",
+				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1"
+				"     broadcast: 'auto')~> join1",
+				"derivedfromjoin sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EPISODE_SK as decimal(20,0),",
+				"          SEASON_NUMBER as decimal(38,0),",
+				"          EPISODE_NUMBER as decimal(38,0),",
+				"          NUM_EPISODES as decimal(38,0),",
+				"          TITLE_SK as decimal(20,0),",
+				"          PARENT_TITLE_SK as decimal(20,0),",
+				"          JOB_ID as string,",
+				"          LOAD_DT as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          EPISODE_SK,",
+				"          SEASON_NUMBER = SEASONNUMBER,",
+				"          EPISODE_NUMBER = EPISODENUMBER,",
+				"          NUM_EPISODES = {Numof Episodes},",
+				"          TITLE_SK,",
+				"          PARENT_TITLE_SK,",
+				"          JOB_ID,",
+				"          LOAD_DT",
+				"     )) ~> sink1"
 			]
 		}
 	}
