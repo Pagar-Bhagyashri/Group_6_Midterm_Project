@@ -1,5 +1,5 @@
 {
-	"name": "title_raing_parquet",
+	"name": "title_rating_parquet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorageMidtermProject",
