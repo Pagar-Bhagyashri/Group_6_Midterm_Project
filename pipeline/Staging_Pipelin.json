@@ -6,6 +6,8 @@
 				"name": "Staging name_basics to snowflake",
 				"description": "Staging name_basics to snowflake",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.00:30:00",
@@ -60,7 +62,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "name_basics_parquet",
+						"referenceName": "NameBasicCleaned1",
 						"type": "DatasetReference"
 					}
 				],
@@ -75,12 +77,10 @@
 				"name": "Staging_title_akas",
 				"description": "Staging_title_akas to snowflake",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
-					"retry": 0,
+					"retry": 1,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -131,13 +131,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "title_akas_parquet",
+						"referenceName": "TitleAkasParquet1",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "IMDb_to_Snowflake",
+						"referenceName": "TitleAkasSF",
 						"type": "DatasetReference"
 					}
 				]
