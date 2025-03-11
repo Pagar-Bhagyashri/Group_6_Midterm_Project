@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "Parquet1",
+						"referenceName": "TitleBasicsParquet",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -15,72 +15,92 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "TitleBasicsflatteneddata",
+						"referenceName": "Title_Basics_Flattened_data_SnowflakeTable",
 						"type": "DatasetReference"
 					},
-					"name": "sink"
+					"name": "sink1"
 				}
 			],
 			"transformations": [
 				{
-					"name": "SpiltColumns"
-				},
-				{
-					"name": "flattenGenres"
-				},
-				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "flatten1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          tconst as string,",
-				"          titleType as string,",
-				"          primaryTitle as string,",
-				"          originalTitle as string,",
-				"          isAdult as short,",
-				"          startYear as integer,",
-				"          endYear as integer,",
-				"          runtimeMinutes as long,",
-				"          genres as string",
+				"          TCONST as string,",
+				"          TITLETYPE as string,",
+				"          PRIMARYTITLE as string,",
+				"          ORIGINALTITLE as string,",
+				"          ISADULT as short,",
+				"          STARTYEAR as integer,",
+				"          ENDYEAR as integer,",
+				"          RUNTIMEMINUTES as long,",
+				"          GENRES as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> source1",
-				"source1 derive(GENRES = split(genres, ',')) ~> SpiltColumns",
-				"SpiltColumns foldDown(unroll(GENRES),",
+				"source1 derive(GENRES = split(GENRES, ',')) ~> derivedColumn1",
+				"derivedColumn1 foldDown(unroll(GENRES),",
 				"     mapColumn(",
-				"          tconst,",
-				"          titleType,",
-				"          primaryTitle,",
-				"          originalTitle,",
-				"          isAdult,",
-				"          startYear,",
-				"          endYear,",
-				"          runtimeMinutes,",
-				"          genres = SpiltColumns@GENRES",
+				"          TCONST,",
+				"          TITLETYPE,",
+				"          PRIMARYTITLE,",
+				"          ORIGINALTITLE,",
+				"          ISADULT,",
+				"          STARTYEAR,",
+				"          ENDYEAR,",
+				"          RUNTIMEMINUTES,",
+				"          GENRES",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flattenGenres",
-				"flattenGenres derive(DI_JOB_ID = uuid(),",
-				"          DI_LOAD_DT = currentTimestamp()) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 derive(DI_JOB_ID = uuid(),",
+				"          DI_LOAD_DT = currentTimestamp()) ~> derivedColumn2",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          nconst as string,",
-				"          primaryName as string,",
-				"          birthYear as integer,",
-				"          deathYear as integer,",
-				"          primaryProfession as string,",
-				"          knownForTitles as string",
+				"          TCONST as string,",
+				"          TITLETYPE as string,",
+				"          PRIMARYTITLE as string,",
+				"          ORIGINALTITLE as string,",
+				"          ISADULT as decimal(2,0),",
+				"          STARTYEAR as decimal(4,0),",
+				"          ENDYEAR as decimal(4,0),",
+				"          RUNTIMEMINUTES as decimal(20,0),",
+				"          GENRES as string,",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
 				"     ),",
-				"     format: 'parquet',",
-				"     umask: 0022,",
-				"     preCommands: [],",
-				"     postCommands: [],",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink"
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          TCONST,",
+				"          TITLETYPE,",
+				"          PRIMARYTITLE,",
+				"          ORIGINALTITLE,",
+				"          ISADULT,",
+				"          STARTYEAR,",
+				"          ENDYEAR,",
+				"          RUNTIMEMINUTES,",
+				"          GENRES,",
+				"          DI_JOB_ID,",
+				"          DI_LOAD_DT",
+				"     )) ~> sink1"
 			]
 		}
 	}

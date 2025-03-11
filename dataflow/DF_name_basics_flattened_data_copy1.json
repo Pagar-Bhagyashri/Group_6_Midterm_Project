@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "name_basics_parquet",
+						"referenceName": "NameBasicsclean1Parquet2",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "SnowflakeTableNameBasics",
+						"referenceName": "Snowflakenamebasics",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -26,50 +26,70 @@
 					"name": "SplitColumns"
 				},
 				{
-					"name": "flattenProfession"
+					"name": "flatten1"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          nconst as string,",
-				"          primaryName as string,",
-				"          birthYear as integer,",
-				"          deathYear as integer,",
-				"          primaryProfession as string,",
-				"          knownForTitles as string",
+				"          NCONST as string,",
+				"          PRIMARYNAME as string,",
+				"          BIRTHYEAR as integer,",
+				"          DEATHYEAR as integer,",
+				"          PRIMARYPROFESSION as string,",
+				"          KNOWNFORTITLES as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> source1",
-				"source1 derive(PRIMARY_PROFESSION = split(primaryProfession, ','),",
-				"          KNOWN_FOR_TITLES = split(knownForTitles, ',')) ~> SplitColumns",
+				"source1 derive(PRIMARY_PROFESSION = split(PRIMARYPROFESSION, ','),",
+				"          KNOWN_FOR_TITLES = split(KNOWNFORTITLES, ',')) ~> SplitColumns",
 				"SplitColumns foldDown(unroll(PRIMARY_PROFESSION),",
 				"     mapColumn(",
-				"          nconst,",
-				"          primaryName,",
-				"          birthYear,",
-				"          deathYear,",
-				"          knownForTitles,",
-				"          profession = PRIMARY_PROFESSION",
+				"          NCONST,",
+				"          PRIMARYNAME,",
+				"          BIRTHYEAR,",
+				"          DEATHYEAR,",
+				"          PRIMARYPROFESSION,",
+				"          KNOWNFORTITLES,",
+				"          PRIMARY_PROFESSION,",
+				"          KNOWN_FOR_TITLES",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flattenProfession",
-				"flattenProfession derive(DI_JOB_ID = uuid(),",
-				"          DI_LOAD_DT = currentTimestamp()) ~> derivedColumn2",
-				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 derive(DI_JOB_ID = uuid(),",
+				"          DI_LOAD_DT = currentTimestamp()) ~> derivedColumn3",
+				"derivedColumn3 sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
+				"     input(",
+				"          NCONST as string,",
+				"          PRIMARYNAME as string,",
+				"          BIRTHYEAR as decimal(4,0),",
+				"          DEATHYEAR as decimal(4,0),",
+				"          PRIMARYPROFESSION as string,",
+				"          KNOWNFORTITLES as string,",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
+				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
 				"     format: 'table',",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     stageInsert: true) ~> sink1"
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          NCONST,",
+				"          PRIMARYNAME,",
+				"          BIRTHYEAR,",
+				"          DEATHYEAR,",
+				"          PRIMARYPROFESSION = PRIMARY_PROFESSION,",
+				"          KNOWNFORTITLES,",
+				"          DI_JOB_ID,",
+				"          DI_LOAD_DT",
+				"     )) ~> sink1"
 			]
 		}
 	}
