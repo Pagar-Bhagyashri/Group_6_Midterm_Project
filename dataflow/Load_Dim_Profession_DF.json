@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "SnowflakeDim_profession_DF",
+						"referenceName": "Snowflake_Dim_Profession",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"

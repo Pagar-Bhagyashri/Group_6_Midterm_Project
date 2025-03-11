@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DIM_GENRES",
+						"referenceName": "Snowflake_Dim_Genres",
 						"type": "DatasetReference"
 					},
 					"name": "LoadGenre2SnowFlake"

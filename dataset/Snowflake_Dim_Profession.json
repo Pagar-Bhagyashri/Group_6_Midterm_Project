@@ -1,5 +1,5 @@
 {
-	"name": "SnowflakeDimTitlesDF",
+	"name": "Snowflake_Dim_Profession",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,32 +9,32 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "TITLE_SK",
+				"name": "PROFESSION_SK",
 				"type": "NUMBER",
-				"precision": 22,
+				"precision": 20,
 				"scale": 0
 			},
 			{
-				"name": "TCONST",
+				"name": "PROFESSION_NAME",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "PRIMARY_TITLE",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "ORIGINAL_TITLE",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "TITLE_TYPE",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "IS_ADULT",
+				"name": "IS_CURRENT",
 				"type": "NUMBER",
 				"precision": 2,
 				"scale": 0
+			},
+			{
+				"name": "START_DATE",
+				"type": "DATE"
+			},
+			{
+				"name": "END_DATE",
+				"type": "DATE"
+			},
+			{
+				"name": "PROFESSION_DK",
+				"type": "VARCHAR"
 			},
 			{
 				"name": "JOB_ID",
@@ -47,7 +47,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_EDW",
-			"table": "DIM_TITLES"
+			"table": "DIM_PROFESSION"
 		}
 	}
 }
