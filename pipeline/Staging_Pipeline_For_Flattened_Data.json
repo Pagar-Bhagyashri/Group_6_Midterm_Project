@@ -1,5 +1,5 @@
 {
-	"name": "StagingPipelineForFlattenedData",
+	"name": "Staging_Pipeline_For_Flattened_Data",
 	"properties": {
 		"activities": [
 			{
@@ -20,9 +20,6 @@
 					"dataflow": {
 						"referenceName": "DF_name_basics_flattened_data_copy1",
 						"type": "DataFlowReference"
-					},
-					"staging": {
-						"folderPath": "stagingdata"
 					},
 					"compute": {
 						"coreCount": 8,

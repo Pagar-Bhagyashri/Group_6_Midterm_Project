@@ -1,5 +1,5 @@
 {
-	"name": "NameBasicCleaned1",
+	"name": "title_episodes_parquet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorageMidtermProject",
@@ -10,35 +10,27 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "name.basics_cleaned_1.parquet",
+				"fileName": "title.episode_cleaned_1.parquet",
 				"fileSystem": "silver"
 			},
 			"compressionCodec": "snappy"
 		},
 		"schema": [
 			{
-				"name": "NCONST",
+				"name": "TCONST",
 				"type": "UTF8"
 			},
 			{
-				"name": "PRIMARYNAME",
+				"name": "PARENTTCONST",
 				"type": "UTF8"
 			},
 			{
-				"name": "BIRTHYEAR",
-				"type": "INT32"
+				"name": "SEASONNUMBER",
+				"type": "INT64"
 			},
 			{
-				"name": "DEATHYEAR",
-				"type": "INT32"
-			},
-			{
-				"name": "PRIMARYPROFESSION",
-				"type": "UTF8"
-			},
-			{
-				"name": "KNOWNFORTITLES",
-				"type": "UTF8"
+				"name": "EPISODENUMBER",
+				"type": "INT64"
 			}
 		]
 	}

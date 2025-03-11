@@ -1,5 +1,5 @@
 {
-	"name": "IMDb_to_Snowflake",
+	"name": "StagingTitleCrew",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,27 +9,15 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "PRIMARYNAME",
+				"name": "TCONST",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "BIRTHYEAR",
-				"type": "NUMBER",
-				"precision": 4,
-				"scale": 0
-			},
-			{
-				"name": "DEATHYEAR",
-				"type": "NUMBER",
-				"precision": 4,
-				"scale": 0
-			},
-			{
-				"name": "PRIMARYPROFESSION",
+				"name": "DIRECTORS",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "KNOWNFORTITLES",
+				"name": "WRITERS",
 				"type": "VARCHAR"
 			},
 			{
@@ -43,7 +31,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_SCHEMA",
-			"table": "STAGING_NAME_BASICS"
+			"table": "STAGING_TITLE_CREW"
 		}
 	}
 }

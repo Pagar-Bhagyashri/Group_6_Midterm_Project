@@ -10,46 +10,46 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "title.basics_cleaned.parquet",
+				"fileName": "title.basics_cleaned_1.parquet",
 				"fileSystem": "silver"
 			},
 			"compressionCodec": "snappy"
 		},
 		"schema": [
 			{
-				"name": "tconst",
+				"name": "TCONST",
 				"type": "UTF8"
 			},
 			{
-				"name": "titleType",
+				"name": "TITLETYPE",
 				"type": "UTF8"
 			},
 			{
-				"name": "primaryTitle",
+				"name": "PRIMARYTITLE",
 				"type": "UTF8"
 			},
 			{
-				"name": "originalTitle",
+				"name": "ORIGINALTITLE",
 				"type": "UTF8"
 			},
 			{
-				"name": "isAdult",
+				"name": "ISADULT",
 				"type": "INT_16"
 			},
 			{
-				"name": "startYear",
+				"name": "STARTYEAR",
 				"type": "INT32"
 			},
 			{
-				"name": "endYear",
+				"name": "ENDYEAR",
 				"type": "INT32"
 			},
 			{
-				"name": "runtimeMinutes",
+				"name": "RUNTIMEMINUTES",
 				"type": "INT64"
 			},
 			{
-				"name": "genres",
+				"name": "GENRES",
 				"type": "UTF8"
 			}
 		]

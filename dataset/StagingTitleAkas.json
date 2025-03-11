@@ -1,5 +1,5 @@
 {
-	"name": "SnowflakeTable1",
+	"name": "StagingTitleAkas",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,48 +9,40 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "TCONST",
+				"name": "TITLEID",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "TITLETYPE",
+				"name": "ORDERING",
+				"type": "NUMBER",
+				"precision": 38,
+				"scale": 0
+			},
+			{
+				"name": "TITLE",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "PRIMARYTITLE",
+				"name": "REGION",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "ORIGINALTITLE",
+				"name": "LANGUAGE",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "ISADULT",
+				"name": "TYPES",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "ATTRIBUTES",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "ISORIGINALTITLE",
 				"type": "NUMBER",
 				"precision": 2,
 				"scale": 0
-			},
-			{
-				"name": "STARTYEAR",
-				"type": "NUMBER",
-				"precision": 4,
-				"scale": 0
-			},
-			{
-				"name": "ENDYEAR",
-				"type": "NUMBER",
-				"precision": 4,
-				"scale": 0
-			},
-			{
-				"name": "RUNTIMEMINUTES",
-				"type": "NUMBER",
-				"precision": 20,
-				"scale": 0
-			},
-			{
-				"name": "GENRES",
-				"type": "VARCHAR"
 			},
 			{
 				"name": "DI_JOB_ID",
@@ -63,7 +55,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_SCHEMA",
-			"table": "STAGING_TITLE_BASICS"
+			"table": "STAGING_TITLE_AKAS"
 		}
 	}
 }

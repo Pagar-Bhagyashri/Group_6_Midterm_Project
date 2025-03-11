@@ -1,5 +1,5 @@
 {
-	"name": "staging_name_basic",
+	"name": "StagingTitleRatings",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,28 +9,18 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "PRIMARYNAME",
+				"name": "TCONST",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "BIRTHYEAR",
+				"name": "AVERAGERATING",
+				"type": "FLOAT"
+			},
+			{
+				"name": "NUMVOTES",
 				"type": "NUMBER",
-				"precision": 4,
+				"precision": 10,
 				"scale": 0
-			},
-			{
-				"name": "DEATHYEAR",
-				"type": "NUMBER",
-				"precision": 4,
-				"scale": 0
-			},
-			{
-				"name": "PRIMARYPROFESSION",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "KNOWNFORTITLES",
-				"type": "VARCHAR"
 			},
 			{
 				"name": "DI_JOB_ID",
@@ -43,7 +33,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_SCHEMA",
-			"table": "STAGING_NAME_BASICS"
+			"table": "STAGING_TITLE_RATINGS"
 		}
 	}
 }

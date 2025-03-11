@@ -1,5 +1,5 @@
 {
-	"name": "TitleAkasSF",
+	"name": "StagingTitleEpisodes",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,39 +9,23 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "TITLEID",
+				"name": "TCONST",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "ORDERING",
+				"name": "PARENTTCONST",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "SEASONNUMBER",
 				"type": "NUMBER",
-				"precision": 38,
+				"precision": 5,
 				"scale": 0
 			},
 			{
-				"name": "TITLE",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "REGION",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "LANGUAGE",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "TYPES",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "ATTRIBUTES",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "ISORIGINALTITLE",
+				"name": "EPISODENUMBER",
 				"type": "NUMBER",
-				"precision": 2,
+				"precision": 10,
 				"scale": 0
 			},
 			{
@@ -55,7 +39,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_SCHEMA",
-			"table": "STAGING_TITLE_AKAS"
+			"table": "STAGING_TITLE_EPISODES"
 		}
 	}
 }
