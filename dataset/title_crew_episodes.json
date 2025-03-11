@@ -1,0 +1,37 @@
+{
+	"name": "title_crew_episodes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageMidtermProject",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "title.episode_cleaned_1.parquet",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "TCONST",
+				"type": "UTF8"
+			},
+			{
+				"name": "PARENTTCONST",
+				"type": "UTF8"
+			},
+			{
+				"name": "SEASONNUMBER",
+				"type": "INT64"
+			},
+			{
+				"name": "EPISODENUMBER",
+				"type": "INT64"
+			}
+		]
+	}
+}
