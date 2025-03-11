@@ -1,5 +1,5 @@
 {
-	"name": "Staging_Pipelin",
+	"name": "Staging_Pipeline",
 	"properties": {
 		"activities": [
 			{
@@ -311,6 +311,8 @@
 				"name": "Staging Title_Principles",
 				"description": "Staging Title_Principles to SnowFlake",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Staging Title_Episodes",
