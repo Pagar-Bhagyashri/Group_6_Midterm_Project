@@ -1,0 +1,33 @@
+{
+	"name": "StagingLanguageinSnowflake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "IMDb_Project_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [
+			{
+				"name": "LANGUAGE_NAME",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "LANGUAGE_ABBR",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "DI_JOB_ID",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "DI_LOAD_DT",
+				"type": "DATE"
+			}
+		],
+		"typeProperties": {
+			"schema": "GROUP_6_MIDTERM_PROJECT_SCHEMA",
+			"table": "STAGING_LANGUAGE_CODES"
+		}
+	}
+}

@@ -389,7 +389,16 @@
 				"name": "Staging Region_Codes",
 				"description": "Staging Region_Codes to SnowFlake",
 				"type": "Copy",
-				"dependsOn": [],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "Staging Title_Principles",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.00:30:00",
 					"retry": 0,
@@ -455,14 +464,20 @@
 				]
 			},
 			{
-				"name": "Staging Language_Codes",
-				"description": "Staging Language_Codes to SnowFlake",
+				"name": "StagingLanguage",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Staging Region_Codes",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
-					"timeout": "0.00:30:00",
+					"timeout": "0.12:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -490,7 +505,7 @@
 						],
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
+							"recursive": false,
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -514,13 +529,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "title_principles_parquet",
+						"referenceName": "LanguangeParquet",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "StagingTitlePrinciples",
+						"referenceName": "StagingLanguageinSnowflake",
 						"type": "DatasetReference"
 					}
 				]
