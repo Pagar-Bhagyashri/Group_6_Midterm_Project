@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ParquetRegion",
+						"referenceName": "StagingRegionCodes",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -32,12 +32,13 @@
 			"scriptLines": [
 				"source(output(",
 				"          REGION_ABBR as string,",
-				"          REGION_NAME as string",
+				"          REGION_NAME as string,",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false,",
-				"     format: 'parquet') ~> source1",
+				"     format: 'table') ~> source1",
 				"source1 derive(DI_JOB_ID = uuid(),",
 				"          DI_LOAD_DT = currentTimestamp()) ~> derivedColumn1",
 				"derivedColumn1 keyGenerate(output(REGION_SK as long),",
