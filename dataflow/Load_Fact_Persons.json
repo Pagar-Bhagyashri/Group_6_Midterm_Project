@@ -9,34 +9,43 @@
 						"referenceName": "Snowflake_DIM_PERSONS",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "SrcDimPersons"
 				},
 				{
 					"dataset": {
 						"referenceName": "SnowflakeDimTitlesDF",
 						"type": "DatasetReference"
 					},
-					"name": "source2"
+					"name": "SrcDimTItles"
 				},
 				{
 					"dataset": {
 						"referenceName": "SnowflakeDim_profession_DF",
 						"type": "DatasetReference"
 					},
-					"name": "source3"
+					"name": "SrcDimProfession"
 				},
 				{
 					"dataset": {
 						"referenceName": "StagingTitlePrinciples",
 						"type": "DatasetReference"
 					},
-					"name": "source4"
+					"name": "SrcTitlePrinciples"
 				}
 			],
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "join1"
+					"name": "LookUpDimPersons"
+				},
+				{
+					"name": "lookupDimTitles"
+				},
+				{
+					"name": "lookupDimProfessions"
+				},
+				{
+					"name": "COlumnTransformation"
 				}
 			],
 			"scriptLines": [
@@ -56,7 +65,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'table') ~> source1",
+				"     format: 'table') ~> SrcDimPersons",
 				"source(output(",
 				"          TITLE_SK as decimal(22,0),",
 				"          TCONST as string,",
@@ -69,7 +78,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'table') ~> source2",
+				"     format: 'table') ~> SrcDimTItles",
 				"source(output(",
 				"          PROFESSION_SK as decimal(20,0),",
 				"          PROFESSION_NAME as string,",
@@ -82,7 +91,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'table') ~> source3",
+				"     format: 'table') ~> SrcDimProfession",
 				"source(output(",
 				"          TCONST as string,",
 				"          ORDERING as decimal(5,0),",
@@ -95,12 +104,22 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'table') ~> source4",
-				"source2 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
-				"     joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1"
+				"     format: 'table') ~> SrcTitlePrinciples",
+				"SrcTitlePrinciples, SrcDimPersons lookup(SrcTitlePrinciples@NCONST == SrcDimPersons@NCONST,",
+				"     multiple: false,",
+				"     pickup: 'first',",
+				"     asc(SrcDimPersons@NCONST, true),",
+				"     broadcast: 'auto')~> LookUpDimPersons",
+				"LookUpDimPersons, SrcDimTItles lookup(SrcTitlePrinciples@TCONST == SrcDimTItles@TCONST,",
+				"     multiple: false,",
+				"     pickup: 'first',",
+				"     asc(SrcDimTItles@TCONST, true),",
+				"     broadcast: 'auto')~> lookupDimTitles",
+				"lookupDimTitles, SrcDimProfession lookup(JOB == PROFESSION_NAME,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookupDimProfessions",
+				"lookupDimProfessions derive(FACT_PERSON_SK = monotonicallyIncreasingId()) ~> COlumnTransformation"
 			]
 		}
 	}
