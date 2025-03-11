@@ -27,6 +27,9 @@
 				},
 				{
 					"name": "surrogateKey1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -43,17 +46,17 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table') ~> source1",
-				"surrogateKey1 derive(PROFESSION_DK = md5(toString(PROFESSION_SK) + PRIMARYPROFESSION)\r",
-				",",
-				"          START_DATE = toDate(currentUTC())\r",
-				",",
-				"          END_DATE = toDate('9999-12-31')\r",
-				",",
-				"          IS_CURRENT = 1\r",
-				") ~> derivedColumn1",
-				"source1 keyGenerate(output(PROFESSION_SK as long),",
+				"surrogateKey1 derive(PROFESSION_DK = md5(toString(PROFESSION_SK) + PRIMARYPROFESSION),",
+				"          START_DATE = toDate(currentUTC()),",
+				"          END_DATE = toDate('9999-12-31'),",
+				"          IS_CURRENT = 1,",
+				"          DI_JOB_ID = uuid(),",
+				"          DI_LOAD_DT = currentTimestamp()) ~> derivedColumn1",
+				"aggregate1 keyGenerate(output(PROFESSION_SK as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
+				"source1 aggregate(groupBy(PRIMARYPROFESSION),",
+				"     PRIMARYPROFESSION1 = first(PRIMARYPROFESSION)) ~> aggregate1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
