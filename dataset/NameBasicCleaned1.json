@@ -1,5 +1,5 @@
 {
-	"name": "title_crew_parquet",
+	"name": "NameBasicCleaned1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorageMidtermProject",
@@ -10,22 +10,34 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "title.crew_cleaned_1.parquet",
+				"fileName": "name.basics_cleaned_1.parquet",
 				"fileSystem": "silver"
 			},
 			"compressionCodec": "snappy"
 		},
 		"schema": [
 			{
-				"name": "tconst",
+				"name": "NCONST",
 				"type": "UTF8"
 			},
 			{
-				"name": "directors",
+				"name": "PRIMARYNAME",
 				"type": "UTF8"
 			},
 			{
-				"name": "writers",
+				"name": "BIRTHYEAR",
+				"type": "INT32"
+			},
+			{
+				"name": "DEATHYEAR",
+				"type": "INT32"
+			},
+			{
+				"name": "PRIMARYPROFESSION",
+				"type": "UTF8"
+			},
+			{
+				"name": "KNOWNFORTITLES",
 				"type": "UTF8"
 			}
 		]
