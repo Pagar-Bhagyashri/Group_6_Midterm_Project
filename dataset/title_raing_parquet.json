@@ -1,0 +1,33 @@
+{
+	"name": "title_raing_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageMidtermProject",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "title.ratings_cleaned_1.parquet",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "TCONST",
+				"type": "UTF8"
+			},
+			{
+				"name": "AVERAGERATING",
+				"type": "FLOAT"
+			},
+			{
+				"name": "NUMVOTES",
+				"type": "INT64"
+			}
+		]
+	}
+}
