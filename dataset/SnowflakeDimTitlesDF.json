@@ -1,5 +1,5 @@
 {
-	"name": "Snowflake_Dim_Region",
+	"name": "SnowflakeDimTitlesDF",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,18 +9,32 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "REGION_SK",
+				"name": "TITLE_SK",
 				"type": "NUMBER",
-				"precision": 20,
+				"precision": 22,
 				"scale": 0
 			},
 			{
-				"name": "REGION_NAME",
+				"name": "TCONST",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "REGION_ABBR",
+				"name": "PRIMARY_TITLE",
 				"type": "VARCHAR"
+			},
+			{
+				"name": "ORIGINAL_TITLE",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "TITLE_TYPE",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "IS_ADULT",
+				"type": "NUMBER",
+				"precision": 2,
+				"scale": 0
 			},
 			{
 				"name": "JOB_ID",
@@ -33,7 +47,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_EDW",
-			"table": "DIM_REGIONS"
+			"table": "DIM_TITLES"
 		}
 	}
 }

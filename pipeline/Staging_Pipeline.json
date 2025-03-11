@@ -311,6 +311,8 @@
 				"name": "Staging Title_Principles",
 				"description": "Staging Title_Principles to SnowFlake",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Staging Title_Episodes",
@@ -378,7 +380,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "PrincipleSink",
+						"referenceName": "StagingTitlePrinciples",
 						"type": "DatasetReference"
 					}
 				]
@@ -462,7 +464,7 @@
 				]
 			},
 			{
-				"name": "Staging Language Codes",
+				"name": "StagingLanguage",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -533,7 +535,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "StagingLanguageCodes",
+						"referenceName": "StagingLanguageinSnowflake",
 						"type": "DatasetReference"
 					}
 				]

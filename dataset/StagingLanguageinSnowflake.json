@@ -1,5 +1,5 @@
 {
-	"name": "PrincipleSink",
+	"name": "StagingLanguageinSnowflake",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,29 +9,11 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "TCONST",
+				"name": "LANGUAGE_NAME",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "ORDERING",
-				"type": "NUMBER",
-				"precision": 5,
-				"scale": 0
-			},
-			{
-				"name": "NCONST",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "CATEGORY",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "JOB",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "CHARACTERS",
+				"name": "LANGUAGE_ABBR",
 				"type": "VARCHAR"
 			},
 			{
@@ -45,7 +27,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_SCHEMA",
-			"table": "STAGING_TITLE_PRINCIPALS"
+			"table": "STAGING_LANGUAGE_CODES"
 		}
 	}
 }

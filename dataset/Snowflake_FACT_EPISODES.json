@@ -1,5 +1,5 @@
 {
-	"name": "Snowflake_Dim_Persons",
+	"name": "Snowflake_FACT_EPISODES",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMDb_Project_ls",
@@ -9,52 +9,40 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "PERSON_SK",
+				"name": "EPISODE_SK",
 				"type": "NUMBER",
 				"precision": 20,
 				"scale": 0
 			},
 			{
-				"name": "NCONST",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "PRIMARY_NAME",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "BIRTH_YEAR",
+				"name": "SEASON_NUMBER",
 				"type": "NUMBER",
-				"precision": 4,
+				"precision": 38,
 				"scale": 0
 			},
 			{
-				"name": "DEATH_YEAR",
+				"name": "EPISODE_NUMBER",
 				"type": "NUMBER",
-				"precision": 4,
+				"precision": 38,
 				"scale": 0
 			},
 			{
-				"name": "KNOWN_TITLE",
-				"type": "VARCHAR"
-			},
-			{
-				"name": "IS_CURRENT",
+				"name": "NUM_EPISODES",
 				"type": "NUMBER",
-				"precision": 2,
+				"precision": 38,
 				"scale": 0
 			},
 			{
-				"name": "START_DATE",
-				"type": "DATE"
+				"name": "TITLE_SK",
+				"type": "NUMBER",
+				"precision": 20,
+				"scale": 0
 			},
 			{
-				"name": "END_DATE",
-				"type": "DATE"
-			},
-			{
-				"name": "PERSON_DK",
-				"type": "VARCHAR"
+				"name": "PARENT_TITLE_SK",
+				"type": "NUMBER",
+				"precision": 20,
+				"scale": 0
 			},
 			{
 				"name": "JOB_ID",
@@ -67,7 +55,7 @@
 		],
 		"typeProperties": {
 			"schema": "GROUP_6_MIDTERM_PROJECT_EDW",
-			"table": "DIM_PERSONS"
+			"table": "FACT_EPISODES"
 		}
 	}
 }
