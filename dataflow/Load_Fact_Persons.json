@@ -33,7 +33,15 @@
 					"name": "SrcTitlePrinciples"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Snowflake_Fact_Person",
+						"type": "DatasetReference"
+					},
+					"name": "LoadFactPerson"
+				}
+			],
 			"transformations": [
 				{
 					"name": "LookUpDimPersons"
@@ -119,7 +127,45 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookupDimProfessions",
-				"lookupDimProfessions derive(FACT_PERSON_SK = monotonicallyIncreasingId()) ~> COlumnTransformation"
+				"lookupDimProfessions derive(FACT_PERSON_SK = toString(sha1(SrcTitlePrinciples@NCONST + SrcTitlePrinciples@TCONST + CATEGORY + JOB))\r",
+				"\r",
+				",",
+				"          DI_JOB_ID = uuid(),",
+				"          DI_LOAD_DT = currentTimestamp()) ~> COlumnTransformation",
+				"COlumnTransformation sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          FACT_PERSON_SK as string,",
+				"          PERSON_SK as decimal(20,0),",
+				"          CATEGORY as string,",
+				"          JOB as string,",
+				"          CHARACTER as string,",
+				"          ORDERING as decimal(10,0),",
+				"          TITLE_SK as decimal(20,0),",
+				"          PROFESSION_SK as decimal(20,0),",
+				"          JOB_ID as string,",
+				"          LOAD_DT as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          FACT_PERSON_SK,",
+				"          PERSON_SK,",
+				"          CATEGORY,",
+				"          JOB,",
+				"          CHARACTER = CHARACTERS,",
+				"          ORDERING,",
+				"          TITLE_SK,",
+				"          PROFESSION_SK,",
+				"          JOB_ID = DI_JOB_ID,",
+				"          LOAD_DT = DI_LOAD_DT",
+				"     )) ~> LoadFactPerson"
 			]
 		}
 	}

@@ -1,0 +1,178 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "StagingTitleBasic",
+						"type": "DatasetReference"
+					},
+					"name": "SrcStagingTitleBasic"
+				},
+				{
+					"dataset": {
+						"referenceName": "SnowflakeDimTitlesDF",
+						"type": "DatasetReference"
+					},
+					"name": "SrcDimTitle"
+				},
+				{
+					"dataset": {
+						"referenceName": "Snowflake_Region",
+						"type": "DatasetReference"
+					},
+					"name": "SrcDimRegion"
+				},
+				{
+					"dataset": {
+						"referenceName": "Snowflake_Dim_Language",
+						"type": "DatasetReference"
+					},
+					"name": "SrcDimLanguage"
+				},
+				{
+					"dataset": {
+						"referenceName": "DIM_GENRES",
+						"type": "DatasetReference"
+					},
+					"name": "SrcDimGenre"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Snowflake_Fact_Movies",
+						"type": "DatasetReference"
+					},
+					"name": "sinkFactMovies"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumnsFromTitleBasic"
+				},
+				{
+					"name": "lookupDimTitle"
+				},
+				{
+					"name": "lookupDimGenre"
+				},
+				{
+					"name": "derivedColumMovieSk"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          TCONST as string,",
+				"          TITLETYPE as string,",
+				"          PRIMARYTITLE as string,",
+				"          ORIGINALTITLE as string,",
+				"          ISADULT as decimal(2,0),",
+				"          STARTYEAR as decimal(4,0),",
+				"          ENDYEAR as decimal(4,0),",
+				"          RUNTIMEMINUTES as decimal(20,0),",
+				"          GENRES as string,",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> SrcStagingTitleBasic",
+				"source(output(",
+				"          TITLE_SK as decimal(22,0),",
+				"          TCONST as string,",
+				"          PRIMARY_TITLE as string,",
+				"          ORIGINAL_TITLE as string,",
+				"          TITLE_TYPE as string,",
+				"          IS_ADULT as decimal(2,0),",
+				"          JOB_ID as string,",
+				"          LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     inferDriftedColumnTypes: true,",
+				"     format: 'table') ~> SrcDimTitle",
+				"source(output(",
+				"          REGION_SK as decimal(20,0),",
+				"          REGION_NAME as string,",
+				"          REGION_ABBR as string,",
+				"          JOB_ID as string,",
+				"          LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> SrcDimRegion",
+				"source(output(",
+				"          LANGUAGE_SK as decimal(20,0),",
+				"          LANGUAGE_NAME as string,",
+				"          LANGUAGE_ABBR as string,",
+				"          JOB_ID as string,",
+				"          LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> SrcDimLanguage",
+				"source(output(",
+				"          GENRE_SK as decimal(20,0),",
+				"          GENRE_NAME as string,",
+				"          JOB_ID as string,",
+				"          LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> SrcDimGenre",
+				"SrcStagingTitleBasic derive(STARTYEAR = toInteger(STARTYEAR)\r",
+				",",
+				"          ENDYEAR = toInteger(ENDYEAR),",
+				"          RUNTIMEMINUTES = toInteger(RUNTIMEMINUTES),",
+				"          ISADULT = toInteger(ISADULT)) ~> derivedColumnsFromTitleBasic",
+				"derivedColumnsFromTitleBasic, SrcDimTitle lookup(SrcStagingTitleBasic@TCONST == SrcDimTitle@TCONST,",
+				"     multiple: false,",
+				"     pickup: 'first',",
+				"     asc(TITLE_SK, true),",
+				"     broadcast: 'auto')~> lookupDimTitle",
+				"lookupDimTitle, SrcDimGenre lookup(GENRES == GENRE_NAME,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookupDimGenre",
+				"lookupDimGenre derive(MOVIE_SK = toString(sha1(concat(SrcStagingTitleBasic@TCONST, GENRES, toString(STARTYEAR), toString(ENDYEAR))))) ~> derivedColumMovieSk",
+				"derivedColumMovieSk sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          MOVIE_SK as string,",
+				"          START_YEAR as decimal(4,0),",
+				"          END_YEAR as decimal(4,0),",
+				"          RUNTIME_MINUTES as decimal(38,0),",
+				"          IS_ADULT as decimal(2,0),",
+				"          AVG_RATING as double,",
+				"          NUM_VOTES as decimal(38,0),",
+				"          TITLE_SK as decimal(20,0),",
+				"          GENRE_SK as decimal(20,0),",
+				"          REGION_SK as decimal(20,0),",
+				"          LANGUAGE_SK as decimal(20,0),",
+				"          JOB_ID as string,",
+				"          LOAD_DT as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          MOVIE_SK,",
+				"          START_YEAR = STARTYEAR,",
+				"          END_YEAR = ENDYEAR,",
+				"          RUNTIME_MINUTES = RUNTIMEMINUTES,",
+				"          IS_ADULT,",
+				"          TITLE_SK,",
+				"          GENRE_SK",
+				"     )) ~> sinkFactMovies"
+			]
+		}
+	}
+}
