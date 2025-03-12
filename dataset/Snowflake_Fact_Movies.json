@@ -1,0 +1,87 @@
+{
+	"name": "Snowflake_Fact_Movies",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "IMDb_Project_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [
+			{
+				"name": "MOVIE_SK",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "START_YEAR",
+				"type": "NUMBER",
+				"precision": 4,
+				"scale": 0
+			},
+			{
+				"name": "END_YEAR",
+				"type": "NUMBER",
+				"precision": 4,
+				"scale": 0
+			},
+			{
+				"name": "RUNTIME_MINUTES",
+				"type": "NUMBER",
+				"precision": 38,
+				"scale": 0
+			},
+			{
+				"name": "IS_ADULT",
+				"type": "NUMBER",
+				"precision": 2,
+				"scale": 0
+			},
+			{
+				"name": "AVG_RATING",
+				"type": "FLOAT"
+			},
+			{
+				"name": "NUM_VOTES",
+				"type": "NUMBER",
+				"precision": 38,
+				"scale": 0
+			},
+			{
+				"name": "TITLE_SK",
+				"type": "NUMBER",
+				"precision": 20,
+				"scale": 0
+			},
+			{
+				"name": "GENRE_SK",
+				"type": "NUMBER",
+				"precision": 20,
+				"scale": 0
+			},
+			{
+				"name": "REGION_SK",
+				"type": "NUMBER",
+				"precision": 20,
+				"scale": 0
+			},
+			{
+				"name": "LANGUAGE_SK",
+				"type": "NUMBER",
+				"precision": 20,
+				"scale": 0
+			},
+			{
+				"name": "JOB_ID",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "LOAD_DT",
+				"type": "DATE"
+			}
+		],
+		"typeProperties": {
+			"schema": "GROUP_6_MIDTERM_PROJECT_EDW",
+			"table": "FACT_MOVIES"
+		}
+	}
+}
