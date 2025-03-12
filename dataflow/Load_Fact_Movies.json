@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "Load_Fact_Movies",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -123,8 +123,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table') ~> SrcDimGenre",
-				"SrcStagingTitleBasic derive(STARTYEAR = toInteger(STARTYEAR)\r",
-				",",
+				"SrcStagingTitleBasic derive(STARTYEAR = toInteger(STARTYEAR),",
 				"          ENDYEAR = toInteger(ENDYEAR),",
 				"          RUNTIMEMINUTES = toInteger(RUNTIMEMINUTES),",
 				"          ISADULT = toInteger(ISADULT)) ~> derivedColumnsFromTitleBasic",
