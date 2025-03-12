@@ -1,0 +1,69 @@
+{
+	"name": "Load_Bridge_Table_Title_Akas",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "StagingTitleBasic",
+						"type": "DatasetReference"
+					},
+					"name": "titlebasics"
+				},
+				{
+					"dataset": {
+						"referenceName": "StagingTitleAkas",
+						"type": "DatasetReference"
+					},
+					"name": "TitleAkas"
+				},
+				{
+					"name": "Region"
+				},
+				{
+					"name": "Language"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          TCONST as string,",
+				"          TITLETYPE as string,",
+				"          PRIMARYTITLE as string,",
+				"          ORIGINALTITLE as string,",
+				"          ISADULT as decimal(2,0),",
+				"          STARTYEAR as decimal(4,0),",
+				"          ENDYEAR as decimal(4,0),",
+				"          RUNTIMEMINUTES as decimal(20,0),",
+				"          GENRES as string,",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> titlebasics",
+				"source(output(",
+				"          TITLEID as string,",
+				"          ORDERING as decimal(38,0),",
+				"          TITLE as string,",
+				"          REGION as string,",
+				"          LANGUAGE as string,",
+				"          TYPES as string,",
+				"          ATTRIBUTES as string,",
+				"          ISORIGINALTITLE as decimal(2,0),",
+				"          DI_JOB_ID as string,",
+				"          DI_LOAD_DT as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> TitleAkas",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> Region",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> Language"
+			]
+		}
+	}
+}
